@@ -13,15 +13,14 @@ component persistent="true" table="chat"
     property name="created_at" ormtype="timestamp";
     
     // Relationships
-	property name="messages"
-        cascade="all-delete-orphan"
-        fieldtype="many-to-many"
-        cfc="message"
-        type="array"
-        linktable="chat_message" 
-        fkcolumn="fk_chatId"
-        inversejoincolumn="fk_messageId"
-        singularname="message";
+    property name="messages"
+		cascade="all-delete-orphan"
+		fieldtype="one-to-many"
+		cfc="message"
+		type="array"
+		fkcolumn="fk_chatId"
+		inversejoincolumn="id"
+		singularname="message";
 
     property name="users"
         cascade="all-delete-orphan"

@@ -5,3 +5,8 @@
 .container {
 	@apply p-5;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: none;
+}

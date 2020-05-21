@@ -95281,3 +95281,8 @@ video {
   padding: 1.25rem;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
+}
+

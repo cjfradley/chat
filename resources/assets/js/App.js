@@ -8,6 +8,9 @@ window.Vue = require('vue')
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+// adding moment as global
+Vue.use(require('vue-moment'));
+
 // automatically adding all vue files to app
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))

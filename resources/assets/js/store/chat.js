@@ -23,6 +23,9 @@ export default {
         },
         SET_ACTIVE_CHAT (state, data) {
             state.activeChat = data
+        },
+        PUSH_MESSAGE (state, data) {
+            state.activeChat.messages.data.unshift(data)
         }
     },
 
@@ -37,6 +40,9 @@ export default {
         },
         setActiveChat ({ commit }, chat) {
             commit('SET_ACTIVE_CHAT', chat)
+        },
+        addMessageToChat ({ commit }, message) {
+            commit('PUSH_MESSAGE', message)
         }
     }
 }

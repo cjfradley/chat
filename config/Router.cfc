@@ -28,6 +28,14 @@ component{
 			},
 			name="api.users.chats"
         );
+        addRoute(
+			pattern="/api/messages",
+			handler="api.messages",
+			action = {
+				POST = "store"
+			},
+			name="api.messages.store"
+        );
         
 		// Conventions based routing
 		route( ":handler/:action?" ).end();

@@ -17,6 +17,11 @@ component persistent="true" table="message"
         cfc="user"
         fkcolumn="fk_userId";
 
+    property name="chat"
+		fieldtype="many-to-one"
+		cfc="chat"
+		fkcolumn="fk_chatId";
+
 
     // Constructor
     function init()
