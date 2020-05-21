@@ -1,9 +1,13 @@
 ﻿component {
-
+    
 	/**
 	 * Configure the ColdBox App For Production
 	 */
 	function configure() {
+
+        var system = createObject( "java", "java.lang.System" );
+        var environment = system.getenv();
+
 		/**
 		 * --------------------------------------------------------------------------
 		 * ColdBox Directives
@@ -122,7 +126,24 @@
 		 * --------------------------------------------------------------------------
 		 * Remember that the order of declaration is the order they will be registered and fired
 		 */
-		interceptors = [];
+        interceptors = [];
+        
+
+        // Mail settings
+		mailsettings = {
+    		// The default token Marker Symbol
+    		tokenMarker = "@",
+    		// protocol
+    		protocol = {
+        		class = "cbmailservices.models.protocols.CFMailProtocol",
+        		properties = {}
+			},
+            server: environment.MAIL_HOST,
+            username: environment.MAIL_UN,
+            password: environment.MAIL_PW,
+            port: environment.MAIL_PORT,
+            useSSL: 'yes'
+		};
 
 		/**
 		 * --------------------------------------------------------------------------

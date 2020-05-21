@@ -30,11 +30,19 @@
         "testbox":"testbox/",
         "cborm":"modules/cborm/",
         "orm-reload-interceptor":"modules/orm-reload-interceptor/",
-        "cffractal":"modules/cffractal/"
+        "cffractal":"modules/cffractal/",
+        "cbstorages":"modules/cbstorages/",
+        "BCrypt":"modules/BCrypt/",
+        "cbvalidation":"modules/cbvalidation/",
+        "cbmailservices":"modules/cbmailservices/"
     },
     "dependencies":{
         "cborm":"^2.3.0+142",
         "coldbox":"6.0.0-RC-snapshot",
+        "cbstorages":"*",
+        "BCrypt":"^2.5.0-snapshot",
+        "cbvalidation":"^2.1.0+109",
+        "cbmailservices":"^1.5.0+42",
         "orm-reload-interceptor":"^1.0.2",
         "cffractal":"^8.1.1"
     },

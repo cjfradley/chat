@@ -27,6 +27,29 @@ component persistent="true" table="user"
         inversejoincolumn="fk_chatId"
         singularname="chat";
 
+    // Validation
+    this.constraints = {
+        "username" = {
+            required=true,
+            requiredMessage: "Bitte Ihren Namen angeben"
+        },
+        "email" =  {
+            required=true,
+            requiredMessage="Bitte Ihre Email angeben",
+            unique={
+                table:"user", column:"email"
+            },
+            type="email",
+            typeMessage="Scheint keine konforme Email zu sein"
+        },
+        "password" = {
+            required=true,
+            requiredMessage="Bitte ein Passwort definieren",
+            min=5,
+            minMessage="Das Passwort muss mindestens 5 Zeichen lang sein"
+        }
+    };
+
   // Constructor
   function init()
   {

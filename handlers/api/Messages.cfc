@@ -1,21 +1,21 @@
 component extends="coldbox.system.EventHandler" {
 
     property name="ormService" inject="BaseORMService@cborm";
+    property name="sessionStorage" inject="sessionStorage@cbstorages";
     property name="ChatService" inject="entityService:chat";
     property name="fractal" inject="Manager@cffractal";
     
     /**
 	 * Post message
 	 */
-    function store( event, rc, prc )
+    function store( event, rc, prc ) secured
     {
-        // AUTH
-
         // CHECK IF CHAT EXISTS
 
+        
         // CREATE NEW MESSAGE
         var data = {
-            user: rc.userId,
+            user: sessionStorage.get("user").id,
             chat: rc.chatId,
             body: rc.message,
             created_at: now()
