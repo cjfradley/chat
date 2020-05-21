@@ -1,0 +1,15 @@
+{
+    "app":{
+        "cfengine":"adobe@2016"
+    },
+    "web":{
+        "host":"127.0.0.1",
+        "rewrites":{
+            "enable":true
+        },
+        "HTTP":{
+            "enable":true,
+            "port":54905
+        }
+    }
+}

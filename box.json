@@ -1,0 +1,48 @@
+{
+    "name":"nxChat",
+    "version":"1.0.0",
+    "location":"forgeboxStorage",
+    "author":"Chris Fradley",
+    "slug":"nxchat",
+    "shortDescription":"A chat app made for nextron internal use",
+    "createPackageDirectory":false,
+    "type":"mvc",
+    "keywords":[],
+    "homepage":"https://github.com/coldbox-templates/elixir-vuejs",
+    "documentation":"https://github.com/coldbox-templates/elixir-vuejs",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox-templates/elixir-vuejs"
+    },
+    "bugs":"https://github.com/coldbox-templates/elixir-vuejs/issues",
+    "contributors":[],
+    "ignore":[
+        "readme.md"
+    ],
+    "devDependencies":{
+        "testbox":"^4.0.0",
+        "commandbox-dotenv":"*",
+        "commandbox-cfconfig":"*",
+        "commandbox-cfformat":"*"
+    },
+    "installPaths":{
+        "coldbox":"coldbox/",
+        "testbox":"testbox/",
+        "cborm":"modules/cborm/",
+        "orm-reload-interceptor":"modules/orm-reload-interceptor/",
+        "cffractal":"modules/cffractal/"
+    },
+    "dependencies":{
+        "cborm":"^2.3.0+142",
+        "coldbox":"6.0.0-RC-snapshot",
+        "orm-reload-interceptor":"^1.0.2",
+        "cffractal":"^8.1.1"
+    },
+    "scripts":{
+        "postPublish":"!git push --follow-tags",
+        "postInstall":"pathExists .env || cp .env.example .env",
+        "format":"cfformat run config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc --overwrite",
+        "format:check":"cfformat check config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc",
+        "format:watch":"cfformat watch path='config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc' settingsPath='.cfformat.json'"
+    }
+}

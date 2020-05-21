@@ -1,0 +1,7 @@
+@import "~tailwindcss/dist/base";
+@import "~tailwindcss/dist/components";
+@import "~tailwindcss/dist/utilities";
+
+.container {
+	@apply p-5;
+}
