@@ -20,7 +20,7 @@ export default {
 
     mutations: {
         PUSH_CHATS (state, data) {
-            state.chats.push(...data)
+            state.chats = data
         },
         SET_ACTIVE_CHAT (state, data) {
             state.activeChat = data
@@ -57,6 +57,7 @@ export default {
             if (newMessage.user.data.id !== rootState.user.user.id) {
                 commit('PUSH_MESSAGE_TO_CHAT', {newMessage, chatId})
             }
+            return
         }
     }
 }

@@ -48,6 +48,9 @@
                 case 'chatChannel':
                     app.$refs.chat.handleMessageFromSocket(message)
                     break;
+                case 'userChannel':
+                    app.$refs.chatList.handleMessageFromSocket(message)
+                    break;
                 default:
                     break;
             }
@@ -63,7 +66,7 @@
         onOpen="openHandler"
         onMessage="msgHandler"
         onError="errHandler"
-        subscribeTo="chatChannel,usersChannel"
+        subscribeTo="chatChannel,userChannel"
     ></cfwebsocket>
 
 </body>

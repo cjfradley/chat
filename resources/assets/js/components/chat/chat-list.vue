@@ -25,6 +25,16 @@
             ...mapGetters({
                 chats: 'chat/chats'
             })
+        },
+        methods: {
+            ...mapActions({
+                getChats: 'chat/getChats'
+            }),
+            handleMessageFromSocket (message) {
+                if (message.data === 'new') {
+                    this.getChats()
+                }
+            }
         }
     }
 </script>

@@ -1,7 +1,7 @@
 <cfoutput>
     <div class="flex h-full">
         <div class="h-full w-32">
-            <chat-list></chat-list>
+            <chat-list ref="chatList"></chat-list>
         </div>
         <div class="h-full flex-grow">
             <chat ref="chat"></chat>

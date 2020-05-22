@@ -40,7 +40,7 @@ component{
     };
     
     // WEBSOCKETS
-    this.wschannels = [{name="chatChannel"}, {name="usersChannel"}];
+    this.wschannels = [{name="chatChannel"}, {name="userChannel"}];
 
 	// application start
 	public boolean function onApplicationStart(){

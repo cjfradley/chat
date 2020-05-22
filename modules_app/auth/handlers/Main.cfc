@@ -406,6 +406,8 @@ component extends="coldbox.system.EventHandler" singleton {
             ormService.save(chat);
         }
 
+        WsPublish('userChannel', 'new');
+
     }
 
 

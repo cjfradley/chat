@@ -58,7 +58,9 @@
                 })
             },
             handleMessageFromSocket (message) {
-                this.addMessageToSpecificChat(message)
+                this.addMessageToSpecificChat(message).then(() => {
+                    this.handleChatScroll()
+                })
             }
         }
     }
