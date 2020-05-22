@@ -36,6 +36,14 @@ component{
 			},
 			name="api.messages.store"
         );
+        addRoute(
+			pattern="/api/auth/user",
+			handler="auth:api.user",
+			action = {
+				GET = "index"
+			},
+			name="api.auth.user"
+        );
         
 		// Conventions based routing
 		route( ":handler/:action?" ).end();

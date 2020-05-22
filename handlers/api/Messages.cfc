@@ -15,7 +15,7 @@ component extends="coldbox.system.EventHandler" {
         
         // CREATE NEW MESSAGE
         var data = {
-            user: sessionStorage.get("user").id,
+            user: rc.userId,
             chat: rc.chatId,
             body: rc.message,
             created_at: now()

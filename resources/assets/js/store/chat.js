@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 
 export default {
     namespaced: true,
@@ -30,8 +31,8 @@ export default {
     },
 
     actions: {
-        async getChats ({ commit, state, dispatch }) {
-            let response = await axios.get('/api/users/2/chats')
+        async getChats ({ commit, state, dispatch, rootState }) {
+            let response = await axios.get(`/api/users/${rootState.user.user.id}/chats`)
             commit('PUSH_CHATS', response.data.data)
 
             if (!state.activeChat && response.data.data.length) {

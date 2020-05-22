@@ -17,9 +17,11 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 // add vuex store
 import chat from './store/chat'
+import user from './store/user'
 const store = new Vuex.Store({
     modules: {
-        chat
+        chat,
+        user
     }
 })
 

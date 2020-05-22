@@ -12,7 +12,7 @@
 
 <script>
     import axios from "axios";
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
 
     export default {
         props: {
@@ -25,6 +25,11 @@
             return {
                 message: ''
             }
+        },
+        computed: {
+            ...mapGetters({
+                user: 'user/user'
+            })
         },
         methods: {
             ...mapActions({
@@ -41,8 +46,8 @@
             },
             async submitAnswer () {
                 try {
-                    const response = await axios.post(`/api/messages`, {
-                        userId: 2,
+                    const response = await axios.post('/api/messages', {
+                        userId: this.user.id,
                         chatId: this.chat.id,
                         message: this.message
                     })

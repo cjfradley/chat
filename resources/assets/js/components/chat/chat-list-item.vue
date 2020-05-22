@@ -20,10 +20,11 @@
         },
         computed: {
             ...mapGetters({
-                activeChat: 'chat/activeChat'
+                activeChat: 'chat/activeChat',
+                user: 'user/user'
             }),
             title () {
-                const usersOtherThanMe = this.chat.users.data.filter(e => e.id !== 2)
+                const usersOtherThanMe = this.chat.users.data.filter(e => e.id !== this.user.id)
                 return usersOtherThanMe[0].username
             },
             isActive () {

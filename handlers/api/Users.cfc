@@ -10,7 +10,7 @@ component extends="coldbox.system.EventHandler" {
 	 */
     function chats( event, rc, prc ) secured
     {
-        var user = UserService.getOrFail(sessionStorage.get("user").id);
+        var user = UserService.getOrFail(rc.id);
 
         var chats = user.getChats();
 
