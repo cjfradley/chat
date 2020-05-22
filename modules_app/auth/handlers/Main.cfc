@@ -5,6 +5,7 @@ component extends="coldbox.system.EventHandler" singleton {
 
 	// DI
     property name="userService" inject="entityService:user";
+    property name="ormService" inject="BaseORMService@cborm";
     property name="sessionStorage" inject="sessionStorage@cbstorages";
     property name="BCrypt" inject="BCrypt@BCrypt";
     property name="mailService" inject="mailService@cbmailservices";
@@ -57,6 +58,10 @@ component extends="coldbox.system.EventHandler" singleton {
             userService.save(user);
 
             if (loginByCredentials(rc.email, rc.password)) {
+
+                // setup user routine specific to chat
+                setupInitialUser(user);
+
                 relocate(uri="/");
             } else {
                 flash.put("errors_login", "Verifizierung fehlgeschlagen");
@@ -382,5 +387,27 @@ component extends="coldbox.system.EventHandler" singleton {
         // send it
         return(mailService.send( oMail ));
     }
+
+    private function setupInitialUser (user)
+    {
+        var userIds = userService.findAllByEmailNotEqual( user.getEmail() ).map(function (item) {
+            return item.getId();
+        });
+
+        for (i=1; i<=arrayLen(userIds); i=i+1) {
+            var data = {
+                title = '',
+                body = '',
+                users = [user.getId(), userIds[i]],
+                created_at = now()
+            };
+
+            var chat = ormService.populate(target=ormService.new("chat"), memento=data, composeRelationships=true);
+            ormService.save(chat);
+        }
+
+    }
+
+
     
 }
