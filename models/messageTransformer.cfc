@@ -1,7 +1,7 @@
 component name="messageTransformer" extends="cffractal.models.transformers.AbstractTransformer" singleton {
 
     variables.defaultIncludes = [ "user" ];
-    variables.availableIncludes = [ ];
+    variables.availableIncludes = [ "chat" ];
 
     function transform( message ) {
         return {
@@ -16,6 +16,15 @@ component name="messageTransformer" extends="cffractal.models.transformers.Abstr
         return item (
             data = message.getUser(),
             transformer = wirebox.getInstance( "userTransformer" ),
+            serializer = wirebox.getInstance( "DataSerializer@cffractal" )
+        );
+    }
+
+    function includeChat ( message )
+    {
+        return item (
+            data = message.getChat(),
+            transformer = wirebox.getInstance( "chatTransformer" ),
             serializer = wirebox.getInstance( "DataSerializer@cffractal" )
         );
     }

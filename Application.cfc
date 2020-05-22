@@ -37,7 +37,10 @@ component{
 		eventHandling =  true,
 		eventHandler = "cborm.models.EventHandler",
 		dialect: "MySQL"
-	};
+    };
+    
+    // WEBSOCKETS
+    this.wschannels = [{name="chatChannel"}, {name="usersChannel"}];
 
 	// application start
 	public boolean function onApplicationStart(){

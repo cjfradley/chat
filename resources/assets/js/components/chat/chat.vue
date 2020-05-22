@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import { mapGetters } from "vuex";
+    import { mapGetters, mapActions } from "vuex"
 
     import message from "./message";
     import answer from "./answer";
@@ -48,11 +48,17 @@
             }
         },
         methods: {
+            ...mapActions({
+                addMessageToSpecificChat: 'chat/addMessageToSpecificChat'
+            }),
             handleChatScroll () {
                 this.$nextTick(() => {
                     var container = this.$refs.messagesContainer
                     container.scrollTop = container.scrollHeight
                 })
+            },
+            handleMessageFromSocket (message) {
+                this.addMessageToSpecificChat(message)
             }
         }
     }

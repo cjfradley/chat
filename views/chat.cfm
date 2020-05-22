@@ -4,7 +4,7 @@
             <chat-list></chat-list>
         </div>
         <div class="h-full flex-grow">
-            <chat></chat>
+            <chat ref="chat"></chat>
         </div>
     </div>
 </cfoutput>

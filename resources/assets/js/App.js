@@ -27,7 +27,9 @@ const store = new Vuex.Store({
 
 
 // creating new vue instance
-const app = new Vue({
+var app = new Vue({
     el : '#app',
     store
 });
+
+window.app = app

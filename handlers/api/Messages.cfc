@@ -24,6 +24,17 @@ component extends="coldbox.system.EventHandler" {
 
         ormService.save(message);
 
+        // publish to channel
+        var socketMessage = fractal.builder()
+            .item( message )
+            .withTransformer( "messageTransformer" )
+            .withSerializer("DataSerializer@cffractal")
+            .withIncludes( "chat" )
+            .withExcludes( "chat.messages,chat.users,chat.body,chat.title,chat.created_at" )
+            .convert();
+            
+        WsPublish('chatChannel', socketMessage);
+
         return fractal.builder()
             .item( message )
             .withTransformer( "messageTransformer" )

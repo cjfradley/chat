@@ -34,7 +34,38 @@
 
 	<script src="#html.elixirPath( "js/runtime.js" )#"></script>
     <script src="#html.elixirPath( "js/vendor.js" )#"></script>
-	<script src="#html.elixirPath( "js/app.js" )#"></script>
+    <script src="#html.elixirPath( "js/app.js" )#"></script>
+    
+    <script>
+        function openHandler(){
+            //Subscribe to the channel, pass in headers for filtering later
+            // ChatSocket.subscribe('chatChannel',{name: 'TheUserName', UserID: 'TheUserID', AccountID: 'AnUniqueID' });
+        }
+        // this is the receiving function
+        function msgHandler(message){
+            // if condition to display the message to the user who are sending and receiving
+            switch (message.channelname) {
+                case 'chatChannel':
+                    app.$refs.chat.handleMessageFromSocket(message)
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function errHandler(error) {
+            console.log(error);
+        }
+    </script>
+
+    <cfwebsocket
+        name="ChatSocket"
+        onOpen="openHandler"
+        onMessage="msgHandler"
+        onError="errHandler"
+        subscribeTo="chatChannel,usersChannel"
+    ></cfwebsocket>
+
 </body>
 </html>
 </cfoutput>

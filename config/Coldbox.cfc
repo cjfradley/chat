@@ -126,7 +126,15 @@
 		 * --------------------------------------------------------------------------
 		 * Remember that the order of declaration is the order they will be registered and fired
 		 */
-        interceptors = [];
+        interceptors = [
+            // {
+            //     class   = "interceptors.UserORMInterceptor", //by default this should be interceptors.yourcfcname  
+            //     name    = "UserORMInterceptor",
+            //     properties = {
+            //         // configuration
+            //     }
+            // }
+        ];
         
 
         // Mail settings

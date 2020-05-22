@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import { omit as _omit, cloneDeep as _clone } from "lodash"
 
 export default {
     namespaced: true,
@@ -27,6 +27,12 @@ export default {
         },
         PUSH_MESSAGE (state, data) {
             state.activeChat.messages.data.unshift(data)
+        },
+        PUSH_MESSAGE_TO_CHAT (state, {newMessage, chatId}) {
+            const chat = state.chats.find(e => e.id === chatId)
+            if (chat) {
+                chat.messages.data.unshift(newMessage)
+            }
         }
     },
 
@@ -44,6 +50,13 @@ export default {
         },
         addMessageToChat ({ commit }, message) {
             commit('PUSH_MESSAGE', message)
+        },
+        addMessageToSpecificChat ({ commit, rootState }, message) {
+            const newMessage = _omit(_clone(message.data.data), 'chat')
+            const chatId = message.data.data.chat.data.id
+            if (newMessage.user.data.id !== rootState.user.user.id) {
+                commit('PUSH_MESSAGE_TO_CHAT', {newMessage, chatId})
+            }
         }
     }
 }
