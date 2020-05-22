@@ -2,9 +2,15 @@
     <div
         :class="{ 'bg-blue-700' : isActive }"
         @click.prevent="showChat"
-        class="pt-2 pb-2 pl-5 pr-5 hover:bg-blue-700 cursor-default"
+        class="flex pt-2 pb-2 pl-5 pr-5 hover:bg-blue-700 cursor-default items-center justify-between"
     >
-        {{ title }}
+        <div>
+            {{ title }} {{ chat.id }}
+        </div>
+        <div v-if="hasNewMessages" class="w-5 h-5 rounded-full bg-orange-700 flex items-center justify-center">
+            <span class="font-bold text-sm">{{ hasNewMessages }}</span>
+        </div>
+
     </div>
 </template>
 
@@ -21,6 +27,7 @@
         computed: {
             ...mapGetters({
                 activeChat: 'chat/activeChat',
+                newMessages: 'chat/newMessages',
                 user: 'user/user'
             }),
             title () {
@@ -29,14 +36,20 @@
             },
             isActive () {
                 return this.activeChat ? this.activeChat.id === this.chat.id : false
+            },
+            hasNewMessages () {
+                const found = this.newMessages.find(e => e.chatId === this.chat.id)
+                return found ? found.count : 0
             }
         },
         methods: {
             ...mapActions({
-                setActiveChat: 'chat/setActiveChat'
+                setActiveChat: 'chat/setActiveChat',
+                addNewMessage: 'chat/addNewMessage'
             }),
             showChat () {
                 this.setActiveChat(this.chat)
+                this.addNewMessage({ chatId: this.chat.id, count: 0 })
             }
         }
     }

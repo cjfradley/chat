@@ -6,6 +6,7 @@ export default {
 
     state: {
         chats: [],
+        newMessages: [],
         activeChat: null
     },
 
@@ -15,6 +16,9 @@ export default {
         },
         activeChat (state) {
             return state.activeChat
+        },
+        newMessages (state) {
+            return state.newMessages
         }
     },
 
@@ -33,6 +37,19 @@ export default {
             if (chat) {
                 chat.messages.data.unshift(newMessage)
             }
+        },
+        ADD_NEW_MESSAGES_COUNT (state, { chatId, count }) {
+            if (!count) {
+                state.newMessages = state.newMessages.filter(e => e.chatId !== chatId)
+                return
+            }
+            const m = state.newMessages.find(e => e.chatId === chatId)
+            if (m) {
+                m.count = (m.count + count)
+                return
+            }
+            state.newMessages.push({ chatId, count })
+            
         }
     },
 
@@ -51,13 +68,21 @@ export default {
         addMessageToChat ({ commit }, message) {
             commit('PUSH_MESSAGE', message)
         },
-        addMessageToSpecificChat ({ commit, rootState }, message) {
+        addMessageToSpecificChat ({ commit, dispatch, rootState }, message) {
             const newMessage = _omit(_clone(message.data.data), 'chat')
             const chatId = message.data.data.chat.data.id
             if (newMessage.user.data.id !== rootState.user.user.id) {
                 commit('PUSH_MESSAGE_TO_CHAT', {newMessage, chatId})
+                dispatch('addNewMessage', { chatId, count: 1 })
             }
             return
+        },
+        addNewMessage ({ state, commit }, payload) {
+            if (state.activeChat.id !== payload.chatId) {
+                const chatId = payload.chatId
+                const count = payload.count
+                commit('ADD_NEW_MESSAGES_COUNT', { chatId, count })
+            }
         }
     }
 }
