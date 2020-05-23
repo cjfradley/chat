@@ -78,7 +78,7 @@ export default {
             return
         },
         addNewMessage ({ state, commit }, payload) {
-            if (state.activeChat.id !== payload.chatId) {
+            if ((state.activeChat.id !== payload.chatId || !payload.count) && state.chats.find(e => e.id === payload.chatId)) {
                 const chatId = payload.chatId
                 const count = payload.count
                 commit('ADD_NEW_MESSAGES_COUNT', { chatId, count })

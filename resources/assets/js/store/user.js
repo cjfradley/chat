@@ -20,10 +20,11 @@ export default {
     },
 
     actions: {
-        async getUser ({ commit, dispatch }) {
+        async getUser ({ commit }) {
             try {
                 const response = await axios.get('/api/auth/user')
                 commit('SET_USER', response.data.data)
+                return response
             } catch (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -35,6 +36,7 @@ export default {
                     console.log(error.message);
                 }
                 console.log(error)
+                return error
             }
         }
     }

@@ -9,7 +9,7 @@
             return false;
         }
 
-        return true;
+        return sessionStorage.get("user");
     }
 
 </cfscript>

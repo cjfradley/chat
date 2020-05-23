@@ -10,7 +10,7 @@
     export default {
         mounted () {
             this.getUser()
-            .then(() => {
+            .then((response) => {
                 this.getChats()
             })
         },

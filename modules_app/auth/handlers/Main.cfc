@@ -101,9 +101,11 @@ component extends="coldbox.system.EventHandler" singleton {
         var prms = arrayNew(1);
 
         // set logged in user struct
-        setLoggedInUser(user, rls, prms);
+        if (setLoggedInUser(user, rls, prms)) {
+            return true;
+        };
         
-        return true;
+        return false;
 
     }
 
@@ -112,15 +114,22 @@ component extends="coldbox.system.EventHandler" singleton {
      */
     private function setLoggedInUser(user, rls, prms)
     {
-        var loggedInUser =  structNew();
+        sessionStorage.delete("user");
 
-        loggedInUser['id'] = isNumeric(user.getId()) ? user.getId() : 0;
+        var loggedInUser = structNew();
+
+        loggedInUser['id'] = user.getId();
         loggedInUser['username'] = user.getUsername();
         loggedInUser['email'] = user.getEmail();
         loggedInUser['role'] = rls;
         loggedInUser['permissions'] = prms;
-
+        
         sessionStorage.set("user", loggedInUser);
+
+        if (sessionStorage.exists("user") && sessionStorage.get("user").id gt 0) {
+            return true;
+        }
+        return false;
     }
 
 
