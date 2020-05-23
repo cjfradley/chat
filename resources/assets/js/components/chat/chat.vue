@@ -1,14 +1,21 @@
 <template>
-    <div class="flex flex-col justify-end h-full bg-gray-300">
+    <div class="bg-gray-300 h-full flex flex-col justify-between">
+        
         <template v-if="chat">
 
-            <div ref="messagesContainer" class="flex flex-col overflow-y-scroll max-h-full no-scrollbar">
-                <div
-                    v-for="message in messages"
-                    :key="message.id"
-                    class="py-2 px-4"
-                >
-                    <message :message="message"></message>
+            <div v-if="showInfo" class="px-4 py-2">
+                <component :is="`chat-info-${chat.type}`"></component>
+            </div>
+
+            <div ref="messagesContainer" class="flex items-stretch h-full overflow-y-scroll no-scrollbar">
+                <div class="self-end w-full max-h-full">
+                    <div
+                        v-for="message in messages"
+                        :key="message.id"
+                        class="py-2 px-4"
+                    >
+                        <message :message="message"></message>
+                    </div>
                 </div>
             </div>
 
@@ -20,6 +27,7 @@
             </div>
 
         </template>
+
     </div>
 </template>
 
@@ -45,6 +53,9 @@
             }),
             messages () {
                 return this.chat.messages.data.sort((a,b) => this.$moment(a.created_at).unix() - this.$moment(b.created_at).unix())
+            },
+            showInfo () {
+                return this.chat.type === 'group' || this.chat.type === 'channel'
             }
         },
         methods: {

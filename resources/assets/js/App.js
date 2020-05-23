@@ -8,8 +8,12 @@ window.Vue = require('vue')
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
+// adding vSelect
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+
 // adding moment as global
-Vue.use(require('vue-moment'));
+Vue.use(require('vue-moment'))
 
 // automatically adding all vue files to app
 const files = require.context('./', true, /\.vue$/i)

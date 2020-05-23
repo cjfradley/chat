@@ -10,6 +10,7 @@ component persistent="true" table="chat"
     // Properties
     property name="title" ormtype="string";
     property name="body" ormtype="text";
+    property name="type" ormtype="string";
     property name="created_at" ormtype="timestamp";
     
     // Relationships
@@ -32,11 +33,27 @@ component persistent="true" table="chat"
         inversejoincolumn="fk_userId"
         singularname="user";
 
+    property name="admin"
+		fieldtype="many-to-one"
+		cfc="user"
+		fkcolumn="fk_userId";
+
+    
+
 
     // Constructor
     function init()
     {
         return this;
     };
+
+    // functions
+    function adminId()
+    {
+        if (! isStruct(this.getAdmin())) {
+            return 0;
+        }
+        return this.getAdmin().getId();
+    }
 
 }

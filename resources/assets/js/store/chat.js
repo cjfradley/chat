@@ -27,7 +27,7 @@ export default {
             state.chats = data
         },
         SET_ACTIVE_CHAT (state, data) {
-            state.activeChat = data
+            state.activeChat = state.chats.find(e => e.id === data.id)
         },
         PUSH_MESSAGE (state, data) {
             state.activeChat.messages.data.unshift(data)
@@ -49,7 +49,6 @@ export default {
                 return
             }
             state.newMessages.push({ chatId, count })
-            
         }
     },
 
@@ -57,10 +56,15 @@ export default {
         async getChats ({ commit, state, dispatch, rootState }) {
             let response = await axios.get(`/api/users/${rootState.user.user.id}/chats`)
             commit('PUSH_CHATS', response.data.data)
-
-            if (!state.activeChat && response.data.data.length) {
-                dispatch('setActiveChat', response.data.data[0])
+            
+            let activeChat = null
+            if (state.activeChat && state.chats.find(e => e.id === state.activeChat.id)) {
+                activeChat = state.chats.find(e => e.id === state.activeChat.id)
+            } else if (!state.activeChat && state.chats.length) {
+                activeChat = state.chats[0]
             }
+            dispatch('setActiveChat', activeChat)
+
         },
         setActiveChat ({ commit }, chat) {
             commit('SET_ACTIVE_CHAT', chat)
@@ -83,6 +87,12 @@ export default {
                 const count = payload.count
                 commit('ADD_NEW_MESSAGES_COUNT', { chatId, count })
             }
+        },
+        async addChat ({ state, commit }, payload) {
+            const response = await axios.post('api/chats', payload)
+            state.chats.push(response.data.data)
+            commit('SET_ACTIVE_CHAT', response.data.data)
+            return response
         }
     }
 }

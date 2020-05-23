@@ -5,6 +5,17 @@ component extends="coldbox.system.EventHandler" {
     property name="sessionStorage" inject="sessionStorage@cbstorages";
     property name="fractal" inject="Manager@cffractal";
     
+    function index( event, rc, prc ) secured
+    {
+        var users = UserService.getAll();
+
+        return fractal.builder()
+            .collection( users )
+            .withTransformer( "userTransformer" )
+            .withSerializer("DataSerializer@cffractal")
+            .convert();
+    }
+
     /**
 	 * Get Users chats
 	 */

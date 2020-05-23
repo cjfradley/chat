@@ -1,14 +1,16 @@
 component name="chatTransformer" extends="cffractal.models.transformers.AbstractTransformer" singleton {
 
     variables.defaultIncludes = [ "messages", "users" ];
-    variables.availableIncludes = [ ];
+    variables.availableIncludes = [ "admin" ];
 
     function transform( chat )
     {
         return {
             "id" = chat.getId(),
             "title" = chat.getTitle(),
+            "type" = chat.getType(),
             "body" = chat.getBody(),
+            "adminId" = chat.adminId(),
             "created_at" = chat.getCreated_at()
         };
     }
@@ -26,6 +28,15 @@ component name="chatTransformer" extends="cffractal.models.transformers.Abstract
     {
         return collection (
             data = chat.getUsers(),
+            transformer = wirebox.getInstance( "userTransformer" ),
+            serializer = wirebox.getInstance( "DataSerializer@cffractal" )
+        );
+    }
+
+    function includeAdmin ( chat )
+    {
+        return item (
+            data = chat.getAdmin(),
             transformer = wirebox.getInstance( "userTransformer" ),
             serializer = wirebox.getInstance( "DataSerializer@cffractal" )
         );

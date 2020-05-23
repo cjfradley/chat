@@ -21,6 +21,7 @@
             .then((response) => {
                 this.getChats()
             })
+            this.getUsers()
         },
         computed: {
             ...mapGetters({
@@ -30,6 +31,7 @@
         methods: {
             ...mapActions({
                 getUser: 'user/getUser',
+                getUsers: 'user/getUsers',
                 getChats: 'chat/getChats'
             })
         }

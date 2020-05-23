@@ -37,6 +37,22 @@ component{
 			name="api.messages.store"
         );
         addRoute(
+			pattern="/api/chats/:id/add-user",
+			handler="api.chats",
+			action = {
+                POST = "addUser"
+			},
+			name="api.chats.addUser"
+        );
+        addRoute(
+			pattern="/api/chats",
+			handler="api.chats",
+			action = {
+				POST = "store"
+			},
+			name="api.chats.store"
+        );
+        addRoute(
 			pattern="/api/auth/user",
 			handler="auth:api.user",
 			action = {

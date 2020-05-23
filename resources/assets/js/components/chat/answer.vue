@@ -3,7 +3,7 @@
         <input
             v-model="message"
             @keyup="handleKeyPress"
-            class="w-full py-2 px-4 rounded-lg block appearance-none leading-normal"
+            class="w-full py-2 px-4 rounded-lg block appearance-none leading-normal outline-none focus:shadow-outline focus:bg-blue-100 text-gray-700"
             type="text"
             placeholder="send a message"
         >

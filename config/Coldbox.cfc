@@ -167,6 +167,9 @@
 		 * }
 		 */
 		moduleSettings = {
+            cffractal = {
+                nullDefaultValue : ''
+            }
         };
 
 		/**

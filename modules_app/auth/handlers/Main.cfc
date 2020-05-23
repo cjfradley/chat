@@ -407,6 +407,7 @@ component extends="coldbox.system.EventHandler" singleton {
             var data = {
                 title = '',
                 body = '',
+                type = 'private',
                 users = [user.getId(), userIds[i]],
                 created_at = now()
             };

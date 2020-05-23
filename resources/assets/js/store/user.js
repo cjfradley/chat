@@ -4,18 +4,25 @@ export default {
     namespaced: true,
 
     state: {
-        user: null
+        user: null,
+        users: []
     },
 
     getters: {
         user (state) {
             return state.user
+        },
+        users (state) {
+            return state.users
         }
     },
 
     mutations: {
         SET_USER (state, data) {
             state.user = data
+        },
+        SET_USERS (state, data) {
+            state.users = data
         }
     },
 
@@ -38,6 +45,10 @@ export default {
                 console.log(error)
                 return error
             }
+        },
+        async getUsers ({ commit }) {
+            const response = await axios.get('/api/users')
+            commit('SET_USERS', response.data.data)
         }
     }
 }
