@@ -1,6 +1,6 @@
 ﻿<cfoutput>
     <div class="jumbotron">
-        <cfdump var="#isLoggedIn()#">
+        
         
             <a href="auth/logout">Logout</a>
         

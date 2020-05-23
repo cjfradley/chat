@@ -22,6 +22,7 @@
         "tailwindcss": "^1.4.6",
         "vue": "^2.6.10",
         "vue-moment": "^4.1.0",
+        "vue-zondicons": "^0.1.10",
         "vuex": "^3.4.0"
     },
     "scripts": {

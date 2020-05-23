@@ -1,11 +1,11 @@
 <template>
     <div
-        :class="{ 'bg-blue-700' : isActive }"
+        :class="[ isActive ? 'bg-blue-700' : 'hover:bg-blue-800' ]"
         @click.prevent="showChat"
-        class="flex pt-2 pb-2 pl-5 pr-5 hover:bg-blue-700 cursor-default items-center justify-between"
+        class="flex pt-2 pb-2 pl-5 pr-5 cursor-default items-center justify-between"
     >
         <div>
-            {{ title }} {{ chat.id }}
+            {{ title }}
         </div>
         <div v-if="hasNewMessages" class="w-5 h-5 rounded-full bg-orange-700 flex items-center justify-center">
             <span class="font-bold text-sm">{{ hasNewMessages }}</span>

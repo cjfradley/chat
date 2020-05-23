@@ -9,8 +9,6 @@
         :chat="chat"
     ></chat-list-item>
 
-    {{ newMessages }}
-
   </div>
 </template>
 
@@ -26,8 +24,7 @@
         },
         computed: {
             ...mapGetters({
-                chats: 'chat/chats',
-                newMessages: 'chat/newMessages'
+                chats: 'chat/chats'
             })
         },
         methods: {
