@@ -13,7 +13,7 @@ component persistent="true" table="message"
 
     // Relationships
 	property name="user"
-        fieldtype="one-to-one"
+        fieldtype="many-to-one"
         cfc="user"
         fkcolumn="fk_userId";
 

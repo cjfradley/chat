@@ -27,8 +27,8 @@ component{
 	system = createObject( "java", "java.lang.System" );
 	environment = system.getenv();
 	this.ormEnabled = true;
-	this.datasource = environment.DB_DATABASE;
-	this.ormSettings = {
+    this.datasource = environment.DB_DATABASE;
+    this.ormSettings = {
 		cfclocation = [ "models" ],
 		dbcreate= "update",
 		logSQL = true,
@@ -36,8 +36,9 @@ component{
 		autoManageSession = false,
 		eventHandling =  true,
 		eventHandler = "cborm.models.EventHandler",
-		dialect: "MySQL"
-    };
+		dialect: environment.DB_DIALECT,
+		schema: environment.DB_SCHEMA
+	};
     
     // WEBSOCKETS
     this.wschannels = [{name="chatChannel"}, {name="userChannel"}];

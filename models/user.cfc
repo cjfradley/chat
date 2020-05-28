@@ -37,7 +37,7 @@ component persistent="true" table="user"
             required=true,
             requiredMessage="Bitte Ihre Email angeben",
             unique={
-                table:"user", column:"email"
+                table:"[user]", column:"email"
             },
             type="email",
             typeMessage="Scheint keine konforme Email zu sein"
