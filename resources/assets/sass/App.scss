@@ -25,3 +25,16 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.v-select-style {
+    @apply bg-white;
+    @apply rounded-lg;
+}
+.v-select-style .vs__dropdown-toggle {
+    @apply border-none;
+    @apply rounded-lg;
+}
+.v-select-style .vs__dropdown-toggle .vs__selected-options input {
+    @apply text-gray-700;
+    @apply px-4;
+}

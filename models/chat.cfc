@@ -37,6 +37,14 @@ component persistent="true" table="chat"
 		fkcolumn="fk_userId";
 
     
+    // Validation
+    this.constraints = {
+        "title" = {
+            required=true,
+            requiredMessage: "Bitte einen Titel angeben"
+        }
+    };
+
 
 
     // Constructor

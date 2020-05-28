@@ -1,57 +1,52 @@
 <template>
     <div class="w-full">
-         <input
-            v-model="chat.title"
-            class="mb-3 w-full py-2 px-4 rounded-lg block appearance-none leading-normal outline-none focus:shadow-outline focus:bg-blue-100 text-gray-700"
-            type="text"
-            placeholder="chat title"
-        >
+        <div class="mb-3">
+            <input
+                @input="handleTitleInput"
+                v-model="chat.title"
+                :class="{ 'border-red-700' : errors.title }"
+                class="w-full py-2 px-4 rounded-lg block appearance-none leading-normal outline-none focus:shadow-outline focus:bg-blue-100 text-gray-700"
+                type="text"
+                placeholder="chat title"
+            >
+            <small v-if="errors.title" class="text-red-700 ml-1">{{ errors.title[0].MESSAGE }}</small>
+        </div>
         <div class="flex justify-between items-center w-full">
-            <v-select
-                :options="availableUsers"
-                @input="addUser"
-                v-model="userToAdd"
-                label="username"
-                placeholder="add user"
-            ></v-select>
-            <div class="flex items-center">
-                <div
-                    v-for="u in chat.users.data"
-                    :key=u.id
-                    class="flex items-center pl-3 text-sm font-bold text-gray-700 bg-gray-400 rounded-lg ml-3"
+            <div class="w-1/3">
+                <v-select
+                    :options="availableUsers"
+                    @input="addUser"
+                    v-model="userToAdd"
+                    label="username"
+                    :placeholder="availableUsers.length ? 'add user' : 'no users to add'"
+                    class="v-select-style"
                 >
-                    <span class="mr-2">
-                        {{ u.username }}
-                    </span>
-                    <div
-                        v-if="u.id !== user.id"
-                        @click="removeUser(u.id)"
-                        class="p-2 hover:bg-gray-500 rounded-tr-lg rounded-br-lg"
-                    >
-                        <Zondicon
-                            icon="Close"
-                            class="fill-current text-red-800 h-3 w-3"
-                        />
-                    </div>
-                </div>
+                    <template v-slot:no-options="{ search, searching }">
+                        no users to add
+                    </template>
+                </v-select>
             </div>
+            <chat-info-users :chat="chat"></chat-info-users>
         </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios'
+    import { debounce as _debounce } from "lodash";
     import { mapGetters, mapActions } from 'vuex'
-    import Zondicon from 'vue-zondicons'
+
+    import chatInfoUsers from "./chat-info-users";
 
     export default {
         data () {
             return {
-                userToAdd: null
+                userToAdd: null,
+                errors: {}
             }
         },
         components: {
-            Zondicon
+            chatInfoUsers
         },
         computed: {
             ...mapGetters({
@@ -74,12 +69,22 @@
                 this.getChats()
                 this.userToAdd = null
             },
-            async removeUser (userId) {
-                const response = await axios.post(`api/chats/${this.chat.id}/remove-user`, {
-                    userId
-                })
-                this.getChats()
-            }
+            handleTitleInput () {
+                this.errors = {}
+                this.editTitle()
+            },
+            editTitle: _debounce(async function () {
+                if (this.chat.title) {
+                    try {
+                        const response = await axios.patch(`api/chats/${this.chat.id}`, {
+                            title: this.chat.title
+                        })
+                        this.getChats()
+                    } catch (error) {
+                        this.errors = error.response.data
+                    }
+                }
+            }, 700)
         }
     }
 </script>

@@ -5,6 +5,7 @@ component extends="coldbox.system.EventHandler" {
     property name="ormService" inject="BaseORMService@cborm";
     property name="fractal" inject="Manager@cffractal";
     property name="sessionStorage" inject="sessionStorage@cbstorages";
+    property name="validationManager" inject="ValidationManager@cbvalidation";
 
     /**
 	 * Store new chat
@@ -27,6 +28,32 @@ component extends="coldbox.system.EventHandler" {
             .withTransformer( "chatTransformer" )
             .withSerializer("DataSerializer@cffractal")
             .convert();
+    }
+
+    /**
+	 * Update chat
+	 */
+    function update( event, rc, prc ) secured
+    {
+
+        var chat = ChatService.getOrFail(rc.id);
+
+        chat.setTitle(rc.title);
+
+        var validation = validationManager.validate(chat);
+
+        if (validation.hasErrors()) {
+            event.setHTTPHeader(statusText="ERROR",statusCode=301);
+            return validation.getAllErrorsAsJSON();
+        }
+
+        ChatService.save(chat);
+
+        WsPublish('userChannel', 'new');
+
+        event.setHTTPHeader(statusText="OK",statusCode=200);
+        return "";
+
     }
 
     /**
