@@ -45,8 +45,8 @@ component persistent="true" table="user"
         "password" = {
             required=true,
             requiredMessage="Bitte ein Passwort definieren",
-            min=5,
-            minMessage="Das Passwort muss mindestens 5 Zeichen lang sein"
+            regex="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$",
+            regexMessage="Das Passwort muss mindestens 5 Zeichen lang sein und muss mindestens einen Buchstaben und eine Zahl beinhalten"
         }
     };
 
