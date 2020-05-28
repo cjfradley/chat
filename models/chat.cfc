@@ -15,7 +15,6 @@ component persistent="true" table="chat"
     
     // Relationships
     property name="messages"
-		cascade="all-delete-orphan"
 		fieldtype="one-to-many"
 		cfc="message"
 		type="array"
@@ -24,7 +23,6 @@ component persistent="true" table="chat"
 		singularname="message";
 
     property name="users"
-        cascade="all-delete-orphan"
         fieldtype="many-to-many"
         cfc="user"
         type="array"

@@ -44,6 +44,31 @@ component extends="coldbox.system.EventHandler" {
 
         WsPublish('userChannel', 'new');
 
+        event.setHTTPHeader(statusText="OK",statusCode=200);
+        return "";
+
+    }
+
+    /**
+	 * Remove user from chat
+	 */
+    function removeUser( event, rc, prc ) secured
+    {
+
+        var chat = ChatService.getOrFail(rc.id);
+        var user = UserService.getOrFail(rc.userId);
+
+
+
+        chat.removeUser(user);
+
+        ChatService.save(chat);
+
+        WsPublish('userChannel', 'new');
+
+        event.setHTTPHeader(statusText="OK",statusCode=200);
+        return "";
+
     }
     
 

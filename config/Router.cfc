@@ -45,6 +45,14 @@ component{
 			name="api.chats.addUser"
         );
         addRoute(
+			pattern="/api/chats/:id/remove-user",
+			handler="api.chats",
+			action = {
+                POST = "removeUser"
+			},
+			name="api.chats.removeUser"
+        );
+        addRoute(
 			pattern="/api/chats",
 			handler="api.chats",
 			action = {

@@ -18,9 +18,6 @@
         },
         mounted () {
             this.getUser()
-            .then((response) => {
-                this.getChats()
-            })
             this.getUsers()
         },
         computed: {
