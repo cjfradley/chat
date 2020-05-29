@@ -35,7 +35,6 @@ component extends="coldbox.system.EventHandler" {
 	 */
     function update( event, rc, prc ) secured
     {
-
         var chat = ChatService.getOrFail(rc.id);
 
         chat.setTitle(rc.title);
@@ -53,7 +52,6 @@ component extends="coldbox.system.EventHandler" {
 
         event.setHTTPHeader(statusText="OK",statusCode=200);
         return "";
-
     }
 
     /**
@@ -61,7 +59,6 @@ component extends="coldbox.system.EventHandler" {
 	 */
     function addUser( event, rc, prc ) secured
     {
-
         var chat = ChatService.getOrFail(rc.id);
         var user = UserService.getOrFail(rc.userId);
 
@@ -73,7 +70,6 @@ component extends="coldbox.system.EventHandler" {
 
         event.setHTTPHeader(statusText="OK",statusCode=200);
         return "";
-
     }
 
     /**
@@ -81,11 +77,8 @@ component extends="coldbox.system.EventHandler" {
 	 */
     function removeUser( event, rc, prc ) secured
     {
-
         var chat = ChatService.getOrFail(rc.id);
         var user = UserService.getOrFail(rc.userId);
-
-
 
         chat.removeUser(user);
 
@@ -95,10 +88,21 @@ component extends="coldbox.system.EventHandler" {
 
         event.setHTTPHeader(statusText="OK",statusCode=200);
         return "";
-
     }
     
+    /**
+	 * Get all channels
+	 */
+    function channels( event, rc, prc ) secured
+    {
+        var channels = ChatService.findAllByType('channel');
 
+        return fractal.builder()
+            .collection( channels )
+            .withTransformer( "chatTransformer" )
+            .withSerializer("DataSerializer@cffractal")
+            .convert();
+    }
 
 
 }

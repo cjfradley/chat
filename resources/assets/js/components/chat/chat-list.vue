@@ -48,8 +48,17 @@
                 channels
             </div>
 
-            <div class="px-4">
+            <div class="px-4 mb-2">
                 <add-chat type="channel"></add-chat>
+            </div>
+            
+            <div class="px-4">
+                <button
+                    @click.prevent="openModal"
+                    class="text-sm text-gray-400 text-center bg-blue-700 rounded px-2 mx-auto block"
+                >
+                    Find channels
+                </button>
             </div>
 
             <div>
@@ -68,6 +77,7 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import AddChannel from '../channels/add-channel'
 
     export default {
         data () {
@@ -79,7 +89,10 @@
             ...mapGetters({
                 chats: 'chat/chats',
                 user: 'user/user'
-            })
+            }),
+            availableChannels () {
+                return []
+            }
         },
         watch: {
             user: function (e) {
@@ -101,6 +114,12 @@
                     this.getChats()
                     this.getUsers()
                 }
+            },
+            openModal() {
+                this.$modal.show(AddChannel, null, {
+                    width: '60%',
+                    height: '60%'
+                })
             }
         }
     }
