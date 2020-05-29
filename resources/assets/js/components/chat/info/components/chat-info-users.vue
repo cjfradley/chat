@@ -1,9 +1,10 @@
 <template>
     <div class="flex items-center">
         <div
-            v-for="u in chat.users.data"
+            v-for="(u, number) in chat.users.data"
             :key=u.id
-            class="flex items-center pl-3 text-sm font-bold text-gray-700 bg-gray-400 rounded-lg ml-3"
+            :class="{ 'ml-3': number > 0 }"
+            class="flex items-center pl-3 text-sm font-bold text-gray-700 bg-gray-400 rounded-lg"
         >
             <span class="mr-2">
                 {{ u.username }}
@@ -36,18 +37,13 @@
     import Zondicon from 'vue-zondicons'
 
     export default {
-        props: {
-            chat: {
-                required: true,
-                type: Object
-            }
-        },
         components: {
             Zondicon
         },
         computed: {
             ...mapGetters({
-                user: 'user/user'
+                user: 'user/user',
+                chat: 'chat/activeChat'
             })
         },
         methods: {

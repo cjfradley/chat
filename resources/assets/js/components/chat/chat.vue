@@ -4,7 +4,7 @@
         <template v-if="chat">
 
             <div v-if="showInfo" class="px-4 py-2">
-                <component :is="`chat-info-${chat.type}`"></component>
+                <chat-info></chat-info>
             </div>
 
             <div ref="messagesContainer" class="flex items-stretch h-full overflow-y-scroll no-scrollbar">
@@ -34,14 +34,7 @@
 <script>
     import { mapGetters, mapActions } from "vuex"
 
-    import message from "./message";
-    import answer from "./answer";
-
     export default {
-        components: {
-            message,
-            answer
-        },
         watch: {
             chat: function(e) {
                 this.handleChatScroll()
@@ -65,7 +58,9 @@
             handleChatScroll () {
                 this.$nextTick(() => {
                     var container = this.$refs.messagesContainer
-                    container.scrollTop = container.scrollHeight
+                    if (container) {
+                        container.scrollTop = container.scrollHeight
+                    }
                 })
             },
             handleMessageFromSocket (message) {

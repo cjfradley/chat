@@ -27,7 +27,7 @@ export default {
             state.chats = data
         },
         SET_ACTIVE_CHAT (state, data) {
-            state.activeChat = state.chats.find(e => e.id === data.id)
+            state.activeChat = data ? state.chats.find(e => e.id === data.id) : null
         },
         PUSH_MESSAGE (state, data) {
             state.activeChat.messages.data.unshift(data)
@@ -62,6 +62,8 @@ export default {
                 activeChat = state.chats.find(e => e.id === state.activeChat.id)
             } else if (!state.activeChat && state.chats.length) {
                 activeChat = state.chats[0]
+            } else if (state.activeChat && !state.chats.find(e => e.id === state.activeChat.id)) {
+                activeChat = null
             }
             dispatch('setActiveChat', activeChat)
 

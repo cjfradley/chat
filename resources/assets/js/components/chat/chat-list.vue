@@ -67,17 +67,9 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from "vuex"
-    import chatListItem from './chat-list-item'
-    import addChat from './add-chat'
-    import userData from './../user/user-data'
+    import { mapGetters, mapActions } from 'vuex'
 
     export default {
-        components: {
-            chatListItem,
-            userData,
-            addChat
-        },
         data () {
             return {
                 loading: true

@@ -11,22 +11,8 @@
             >
             <small v-if="errors.title" class="text-red-700 ml-1">{{ errors.title[0].MESSAGE }}</small>
         </div>
-        <div class="flex justify-between items-center w-full">
-            <div class="w-1/3">
-                <v-select
-                    :options="availableUsers"
-                    @input="addUser"
-                    v-model="userToAdd"
-                    label="username"
-                    :placeholder="availableUsers.length ? 'add user' : 'no users to add'"
-                    class="v-select-style"
-                >
-                    <template v-slot:no-options="{ search, searching }">
-                        no users to add
-                    </template>
-                </v-select>
-            </div>
-            <chat-info-users :chat="chat"></chat-info-users>
+        <div class="w-full">
+            <chat-info-users></chat-info-users>
         </div>
     </div>
 </template>
@@ -36,17 +22,12 @@
     import { debounce as _debounce } from "lodash";
     import { mapGetters, mapActions } from 'vuex'
 
-    import chatInfoUsers from "./chat-info-users";
-
     export default {
         data () {
             return {
                 userToAdd: null,
                 errors: {}
             }
-        },
-        components: {
-            chatInfoUsers
         },
         computed: {
             ...mapGetters({
