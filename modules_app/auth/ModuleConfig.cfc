@@ -30,6 +30,14 @@ component {
                 name="auth.register"
             )
             .addRoute(
+                pattern="/verify-email/:key",
+                handler="main",
+                action = {
+                    GET = "verifyEmail"
+                },
+                name="auth.verifyEmail"
+            )
+            .addRoute(
                 pattern="/login",
                 handler="main",
                 action = {

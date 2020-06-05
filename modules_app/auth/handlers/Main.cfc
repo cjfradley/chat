@@ -11,6 +11,8 @@ component extends="coldbox.system.EventHandler" singleton {
     property name="mailService" inject="mailService@cbmailservices";
     property name="validationManager" inject="ValidationManager@cbvalidation";
 
+    this.secret = 'Aiw8c9O0EW5v+2kIAaOTQA==';
+
     /**
      * Show register view
      *
@@ -40,7 +42,7 @@ component extends="coldbox.system.EventHandler" singleton {
             } );
 
         var validation = validationManager.validate(user);
-        
+
         if (validation.hasErrors()) {
 
             for (error in validation.getErrors()) {
@@ -53,20 +55,17 @@ component extends="coldbox.system.EventHandler" singleton {
 
         } else {
 
-            user.setPassword(BCrypt.hashPassword(rc.password));
+            user.setPassword(BCrypt.hashPassword(rc.password))
+                .setVerifykey(generateKey())
+                .setVerified(0);
 
             userService.save(user);
 
-            if (loginByCredentials(rc.email, rc.password)) {
+            // send email verification
+            var sendVerifiactionEmail = sendVerificationMail(user, event);
 
-                // setup user routine specific to chat
-                setupInitialUser(user);
-
-                relocate(uri="/");
-            } else {
-                flash.put("errors_login", "Verifizierung fehlgeschlagen");
-                relocate("auth/login");
-            }
+            flash.put("info", "Eine verifizierungsmail wurde an '" & user.getEmail() & "' verschickt");
+            relocate("auth/login");
 
         }
 
@@ -305,6 +304,27 @@ component extends="coldbox.system.EventHandler" singleton {
 
     }
 
+    any function verifyEmail(event, rc, prc)
+    {
+
+        // check if key is valid
+        if ( ! checkVerifyKey(rc.key)) {
+            flash.put("keyerror", "Deine Email konnte nicht verifiziert werden.");
+            relocate("auth/register/#rc.recoverykey#" );
+        } else {
+            // reset user password in model
+            var user = userService.findByVerifykey(rc.key);
+            user.setVerified(1)
+                .setVerifyKey('');
+            userService.save(user);
+
+            flash.put("info", "Deine Email wurde verifiziert. Du kannst dich jetzt einloggen.");
+
+            relocate("auth/login");
+
+        }
+    }
+
     /**
      * reset the recovery password and expiry date
      *
@@ -333,6 +353,20 @@ component extends="coldbox.system.EventHandler" singleton {
         // check that recovery key date is not to old
         if (dateCompare(now(), user.getRecoverykeyend()) eq 1 ) {
             resetRecoveryKey(user);
+            return false;
+        }
+
+        return true;
+
+    }
+
+    private function checkVerifyKey (key)
+    {
+
+        // get user by recovery key
+        var user = userService.findByVerifykey( key );
+
+        if (isNull(user)) {
             return false;
         }
 
@@ -397,6 +431,33 @@ component extends="coldbox.system.EventHandler" singleton {
         return(mailService.send( oMail ));
     }
 
+     /**
+     * send email verification email
+     */
+    private function sendVerificationMail(user, event)
+    {
+
+        // send email to user
+        var oMail = mailService.newMail( 
+            to=user.getEmail(),
+            from="cjfradley@gmail.com",
+            subject="Email verifizieren",
+            type="html",
+            bodyTokens={
+                username=user.getUsername(),
+                link=event.buildLink( 'auth/verify-email/#user.getVerifykey()#' )
+            }
+        );
+
+        var body = renderLayout(layout="email", view="emails/verify-email");
+        
+        // add a Body
+        oMail.setBody(body);
+
+        // send it
+        return(mailService.send( oMail ));
+    }
+
     /**
      * add new user to all other users private chat channels
     */
@@ -423,6 +484,14 @@ component extends="coldbox.system.EventHandler" singleton {
 
     }
 
+    private function checkAccountVerified (user)
+    {
+        if (user.getVerified()) {
+            return true;
+        }
 
+        return false;
+
+    }
     
 }

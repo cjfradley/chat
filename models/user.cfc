@@ -9,7 +9,9 @@ component persistent="true" table="user"
 	// Properties
 	property name="username" ormtype="string";
 	property name="email" ormtype="string";
-	property name="password" ormtype="string";
+    property name="password" ormtype="string";
+    property name="verified" ormtype="boolean" sqltype="bit";
+    property name="verifykey" ormtype="string";
 	property name="recoverykey" ormtype="string";
 	property name="recoverykeyend" ormtype="timestamp";
     property name="lastLogin" ormtype="timestamp";
