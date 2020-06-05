@@ -3,7 +3,6 @@
 */
 component persistent="true" table="user"
 {
-
   // Primary Key
 	property name="id" fieldtype="id" column="id" generator="native" setter="false";
 
@@ -26,6 +25,10 @@ component persistent="true" table="user"
         inversejoincolumn="fk_chatId"
         singularname="chat";
 
+
+    this.system = createObject( "java", "java.lang.System" );
+    this.environment = this.system.getenv();
+
     // Validation
     this.constraints = {
         "username" = {
@@ -36,10 +39,13 @@ component persistent="true" table="user"
             required=true,
             requiredMessage="Bitte Ihre Email angeben",
             unique={
-                table:"[user]", column:"email"
+                table: this.environment.DB_USER_CONTRAINTS ?: '[user]', column:"email"
             },
+            uniqueMessage="Diese email ist bereits registriert",
             type="email",
-            typeMessage="Scheint keine konforme Email zu sein"
+            typeMessage="Scheint keine konforme Email zu sein",
+            method="checkRegisterEmailAllowed",
+            methodMessage="Diese Email darf nicht registriert werden"
         },
         "password" = {
             required=true,
@@ -53,6 +59,24 @@ component persistent="true" table="user"
   function init()
   {
 		return this;
-	};
+    };
+    
+
+    
+    /**
+     * checkRegisterEmailAllowed
+     */
+    any function checkRegisterEmailAllowed(value, target)
+    {
+
+        var allowedDomains = 'nextron.ch';
+
+        if (listFind(allowedDomains, listGetAt(value, 2, '@'))) {
+            return true;
+        }
+
+        return false;
+    }
+    
 
 }

@@ -7,7 +7,7 @@
 
 	<title>nxChat</title>
 
-	<meta name="description" content="Chris created coldbox template with vuejs components and tailwind">
+	<meta name="description" content="nxChat app for internal use only">
     <meta name="author" content="Chris Fradley">
 
 	<!---Base URL --->

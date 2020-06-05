@@ -1,7 +1,7 @@
 {
-  "includes/js/runtime.js": "/includes/js/runtime.4919d3aeb4bd1395147b.js",
-  "includes/js/vendor.js": "/includes/js/vendor.9cfd9eefa334f42dc1b7.js",
-  "includes/css/app.css": "/includes/css/app.dca6ad34cdd0dce7169f.css",
-  "includes/css/app.js": "/includes/css/app.377d8c5f3727e68c8e9d.js",
-  "includes/js/app.js": "/includes/js/app.b171d9c83c3045266ab9.js"
+  "includes/css/app.css": "/includes/css/app.css",
+  "includes/css/app.js": "/includes/css/app.js",
+  "includes/js/app.js": "/includes/js/app.js",
+  "includes/js/runtime.js": "/includes/js/runtime.js",
+  "includes/js/vendor.js": "/includes/js/vendor.js"
 }

@@ -30,7 +30,7 @@ component extends="coldbox.system.EventHandler" singleton {
      * @rc 
      * @prc 
      */
-    any function savenew( event, rc, prc )
+    any function store( event, rc, prc )
     {
         var user = userService
             .new( {
@@ -397,6 +397,9 @@ component extends="coldbox.system.EventHandler" singleton {
         return(mailService.send( oMail ));
     }
 
+    /**
+     * add new user to all other users private chat channels
+    */
     private function setupInitialUser (user)
     {
         var userIds = userService.findAllByEmailNotEqual( user.getEmail() ).map(function (item) {

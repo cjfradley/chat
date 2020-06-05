@@ -24,7 +24,7 @@ component {
                 pattern="/register",
                 handler="main",
                 action = {
-                    POST = "savenew",
+                    POST = "store",
                     GET = "register"
                 },
                 name="auth.register"
