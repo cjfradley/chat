@@ -22,7 +22,7 @@ component extends="coldbox.system.EventHandler" singleton {
      */
     any function register( event, rc, prc )
     {
-        event.setView( "register" );
+        event.setView("register");
     }
 
     /**
@@ -417,11 +417,10 @@ component extends="coldbox.system.EventHandler" singleton {
      */
     private function sendRecoveryMail(user, event)
     {
-
         // send email to user
         var oMail = mailService.newMail( 
             to=user.getEmail(),
-            from="cjfradley@gmail.com",
+            from="no-reply@bla.com",
             subject="Passwort zurücksetzen",
             type="html",
             bodyTokens={

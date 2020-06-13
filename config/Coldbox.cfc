@@ -5,9 +5,6 @@
 	 */
 	function configure() {
 
-        var system = createObject( "java", "java.lang.System" );
-        var environment = system.getenv();
-
 		/**
 		 * --------------------------------------------------------------------------
 		 * ColdBox Directives
@@ -19,7 +16,7 @@
 		 */
 		coldbox = {
 			// Application Setup
-			appName                  : getSystemSetting( "APPNAME", "Your app name here" ),
+			appName                  : getSystemSetting("APPNAME", "Your app name here"),
 			eventName                : "event",
 			// Development Settings
 			reinitPassword           : "",
@@ -136,7 +133,6 @@
             // }
         ];
         
-
         // Mail settings
 		mailsettings = {
     		// The default token Marker Symbol
@@ -146,11 +142,11 @@
         		class = "cbmailservices.models.protocols.CFMailProtocol",
         		properties = {}
 			},
-            server: environment.MAIL_HOST,
-            username: environment.MAIL_UN,
-            password: environment.MAIL_PW,
-            port: environment.MAIL_PORT,
-            useSSL: 'yes'
+            server: getSystemSetting("MAIL_HOST", "smtp.gmail.com"),
+            username: getSystemSetting("MAIL_UN", "cjfradley@gmail.com"),
+            password: getSystemSetting("MAIL_PW", "fjmacantzydqncqs"),
+            port: getSystemSetting("MAIL_PORT", "465"),
+            useSSL: "yes"
 		};
 
 		/**
