@@ -3,6 +3,9 @@
         <h1 class="text-gray-700 font-bold text-2xl mb-5 mx-auto text-center">Register</h1>
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="#event.buildLink( 'auth.register' )#" method="post">
             <div class="mb-4">
+                <cfif flash.exists("error")>
+                    <div class="text-red-500 font-bold mb-4">#flash.get("error")#</div>
+                </cfif>
                 <label class="block text-gray-700 text-sm font-bold mb-2 <cfif flash.exists("error_username")>text-red-500</cfif>" for="username">
                     Username
                 </label>

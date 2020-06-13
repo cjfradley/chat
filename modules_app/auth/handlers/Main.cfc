@@ -84,16 +84,22 @@ component extends="coldbox.system.EventHandler" singleton {
         var user = userService.findByEmail(email);
 
         if (isNull(user)) {
+            flash.put("errors", "Verifizierung fehlgeschlagen");
+            return false;
+        }
+
+        // check email is verified
+        if (!user.getVerified()) {
+            flash.put("errors", "Bitte erst deine Email verifiezieren");
             return false;
         }
 
         // check password matches
         var passwordCheck = BCrypt.checkPassword( password, user.getPassword() );
 
-        if ( ! passwordCheck ) {
-
+        if (!passwordCheck) {
+            flash.put("errors", "Verifizierung fehlgeschlagen");
             return false;
-
         }
 
         var rls = arrayNew(1);
@@ -252,7 +258,6 @@ component extends="coldbox.system.EventHandler" singleton {
         if (loginByCredentials(rc.email, rc.password)) {
             relocate( uri="/" );
         } else {
-            flash.put("errors", "Verifizierung fehlgeschlagen");
             relocate( uri="/auth/login" );
         }
 
@@ -309,14 +314,17 @@ component extends="coldbox.system.EventHandler" singleton {
 
         // check if key is valid
         if ( ! checkVerifyKey(rc.key)) {
-            flash.put("keyerror", "Deine Email konnte nicht verifiziert werden.");
-            relocate("auth/register/#rc.recoverykey#" );
+            flash.put("error", "Deine Email konnte nicht verifiziert werden.");
+            relocate("auth/register" );
         } else {
             // reset user password in model
             var user = userService.findByVerifykey(rc.key);
             user.setVerified(1)
                 .setVerifyKey('');
             userService.save(user);
+
+            // setup initial user chats
+            setupInitialUser(user);
 
             flash.put("info", "Deine Email wurde verifiziert. Du kannst dich jetzt einloggen.");
 
