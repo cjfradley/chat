@@ -95733,23 +95733,39 @@ video {
   }
 }
 
+.v-select-style,
+.v-select-style-dark {
+  border-radius: 0.5rem;
+}
+
 .v-select-style {
   --bg-opacity: 1;
   background-color: #fff;
   background-color: rgba(255, 255, 255, var(--bg-opacity));
-  border-radius: 0.5rem;
 }
 
-.v-select-style .vs__dropdown-toggle {
+.v-select-style-dark {
+  --bg-opacity: 1;
+  background-color: #e2e8f0;
+  background-color: rgba(226, 232, 240, var(--bg-opacity));
+}
+
+.v-select-style .vs__dropdown-toggle,
+.v-select-style-dark .vs__dropdown-toggle {
   border-style: none;
   border-radius: 0.5rem;
 }
 
-.v-select-style .vs__dropdown-toggle .vs__selected-options input {
+.v-select-style .vs__dropdown-toggle .vs__selected-options input,
+.v-select-style-dark .vs__dropdown-toggle .vs__selected-options input {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.v-select-style .vs__dropdown-toggle .vs__selected-options input,
+.v-select-style-dark .vs__dropdown-toggle .vs__selected-options input {
   --text-opacity: 1;
   color: #4a5568;
   color: rgba(74, 85, 104, var(--text-opacity));
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 

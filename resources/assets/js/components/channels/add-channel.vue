@@ -1,20 +1,15 @@
 <template>
     <div class="p-5">
-        <h1 class="font-md">Find an interesting channel to subscribe to</h1>
-        <v-select
-            :options="channels"
-            v-model="channelToSubscribeTo"
-            label="title"
-            :placeholder="channels.length ? 'find channel' : 'no channels to subcsribe to'"
-            class="v-select-style"
-        >
-            <template v-slot:no-options="{ search, searching }">
-                no channels to subcsribe to
-            </template>
-        </v-select>
-        <p>
-            {{ channelToSubscribeTo }}
-        </p>
+        <h1 class="mb-2 text-xl">Find an interesting channel to subscribe to</h1>
+        
+        <div class="grid grid-cols-2 gap-4">
+            <channel-card
+                v-for="channel in channels"
+                :channel="channel"
+                :key="channel.id"
+            ></channel-card>
+        </div>
+        
     </div>
 </template>
 

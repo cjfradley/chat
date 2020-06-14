@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center">
+    <div class="flex items-start">
         <div
             v-for="(u, number) in chat.users.data"
             :key=u.id
@@ -10,7 +10,7 @@
                 {{ u.username }}
             </span>
             <div
-                v-if="u.id !== user.id && user.id === chat.adminId"
+                v-if="u.id !== user.id && user.id === chat.adminId && chat.type !== 'channel'"
                 @click="removeUser(u.id)"
                 class="p-2 hover:bg-gray-500 rounded-tr-lg rounded-br-lg"
             >

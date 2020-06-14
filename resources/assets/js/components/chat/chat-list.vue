@@ -55,7 +55,7 @@
             <div class="px-4">
                 <button
                     @click.prevent="openModal"
-                    class="text-sm text-gray-400 text-center bg-blue-700 rounded px-2 mx-auto block"
+                    class="text-sm text-gray-400 text-center bg-blue-700 rounded px-2 mx-auto block mb-2"
                 >
                     Find channels
                 </button>

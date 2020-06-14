@@ -38,6 +38,7 @@ component extends="coldbox.system.EventHandler" {
         var chat = ChatService.getOrFail(rc.id);
 
         chat.setTitle(rc.title);
+        chat.setBody(event.getValue("body", ''));
 
         var validation = validationManager.validate(chat);
 
@@ -66,7 +67,9 @@ component extends="coldbox.system.EventHandler" {
 
         ChatService.save(chat);
 
-        WsPublish('userChannel', 'new');
+        if (!event.getValue("noPush", false)) {
+            WsPublish('userChannel', 'new');
+        }
 
         event.setHTTPHeader(statusText="OK",statusCode=200);
         return "";
@@ -89,6 +92,8 @@ component extends="coldbox.system.EventHandler" {
         event.setHTTPHeader(statusText="OK",statusCode=200);
         return "";
     }
+
+
     
     /**
 	 * Get all channels
@@ -99,7 +104,8 @@ component extends="coldbox.system.EventHandler" {
 
         return fractal.builder()
             .collection( channels )
-            .withTransformer( "chatTransformer" )
+            .withTransformer("chatTransformer")
+            .withIncludes("admin")
             .withSerializer("DataSerializer@cffractal")
             .convert();
     }

@@ -14,7 +14,10 @@
                         :key="message.id"
                         class="py-2 px-4"
                     >
-                        <message :message="message"></message>
+                        <message
+                            :chat="chat"
+                            :message="message"
+                        ></message>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <div class="w-full">
         <div class="mb-3">
             <input
-                @input="handleTitleInput"
+                @input="handleInput"
                 v-model="chat.title"
                 :class="{ 'border-red-700' : errors.title }"
                 class="w-full py-2 px-4 rounded-lg block appearance-none leading-normal outline-none focus:shadow-outline focus:bg-blue-100 text-gray-700"
@@ -10,6 +10,16 @@
                 placeholder="chat title"
             >
             <small v-if="errors.title" class="text-red-700 ml-1">{{ errors.title[0].MESSAGE }}</small>
+        </div>
+        <div class="mb-3">
+            <textarea
+                @input="handleInput"
+                v-model="chat.body"
+                class="w-full py-2 px-4 rounded-lg block appearance-none leading-normal outline-none focus:shadow-outline focus:bg-blue-100 text-gray-700"
+                type="text"
+                placeholder="group description"
+            >
+            </textarea>
         </div>
         <div class="flex justify-between items-center w-full">
             <div class="w-1/3">
@@ -64,15 +74,16 @@
                 this.getChats()
                 this.userToAdd = null
             },
-            handleTitleInput () {
+            handleInput () {
                 this.errors = {}
-                this.editTitle()
+                this.editChat()
             },
-            editTitle: _debounce(async function () {
+            editChat: _debounce(async function () {
                 if (this.chat.title) {
                     try {
                         const response = await axios.patch(`api/chats/${this.chat.id}`, {
-                            title: this.chat.title
+                            title: this.chat.title,
+                            body: this.chat.body
                         })
                         this.getChats()
                     } catch (error) {

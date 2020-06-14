@@ -23,11 +23,17 @@ export default {
     },
 
     mutations: {
-        PUSH_CHATS (state, data) {
+        SET_CHATS (state, data) {
             state.chats = data
         },
         SET_ACTIVE_CHAT (state, data) {
             state.activeChat = data ? state.chats.find(e => e.id === data.id) : null
+        },
+        PUSH_CHAT (state, chat) {
+            state.chats.push(chat)
+        },
+        POP_CHAT (state, chatId) {
+            state.chats = state.chats.filter(e => e.id !== chatId)
         },
         PUSH_MESSAGE (state, data) {
             state.activeChat.messages.data.unshift(data)
@@ -55,7 +61,7 @@ export default {
     actions: {
         async getChats ({ commit, state, dispatch, rootState }) {
             let response = await axios.get(`/api/users/${rootState.user.user.id}/chats`)
-            commit('PUSH_CHATS', response.data.data)
+            commit('SET_CHATS', response.data.data)
             
             let activeChat = null
             if (state.activeChat && state.chats.find(e => e.id === state.activeChat.id)) {
@@ -95,6 +101,20 @@ export default {
             state.chats.push(response.data.data)
             commit('SET_ACTIVE_CHAT', response.data.data)
             return response
+        },
+        async addChannel ({ commit, rootState }, channel) {
+            await axios.post(`api/chats/${channel.id}/add-user`, {
+                userId: rootState.user.user.id,
+                noPush: true
+            })
+            commit('PUSH_CHAT', channel)
+            commit('SET_ACTIVE_CHAT', channel)
+        },
+        async removeChannel ({ state, commit, rootState }, channelId) {
+            await axios.post(`api/chats/${channelId}/remove-user`, {
+                userId: rootState.user.user.id
+            })
+            commit('SET_ACTIVE_CHAT', state.chats[0])
         }
     }
 }

@@ -5,12 +5,15 @@
             <component :is="`chat-info-admin-${chat.type}`"></component>
         </div>
         
-        <div v-else class="flex w-full items-center justify-between">
-            <h1
-                class="text-gray-700 font-bold font-md"
-            >
-                {{ chat.title }}
-            </h1>
+        <div v-else class="flex w-full justify-between">
+            <div>
+                <h1
+                    class="text-gray-700 font-bold font-md"
+                >
+                    {{ chat.title }}
+                </h1>
+                <p v-if="chat.body" v-html="chat.body" />
+            </div>
             <chat-info-users></chat-info-users>
         </div>
 
