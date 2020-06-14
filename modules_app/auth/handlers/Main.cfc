@@ -325,6 +325,8 @@ component extends="coldbox.system.EventHandler" singleton {
                 .setVerifyKey('');
             userService.save(user);
 
+            flash.put("info", "Deine Email wurde verifiziert. Du kannst dich jetzt einloggen.");
+
             // setup initial user chats
             setupInitialUser(user);
 
