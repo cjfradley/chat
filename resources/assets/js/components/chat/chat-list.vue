@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-5 pb-5 bg-blue-900 text-gray-300 w-full h-full">
+  <div class="pt-5 pb-5 bg-blue-900 text-gray-300 w-full h-full overflow-y-scroll">
     
     <div class="mb-3">
         <transition name="fade">
