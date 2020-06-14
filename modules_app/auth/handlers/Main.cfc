@@ -312,8 +312,10 @@ component extends="coldbox.system.EventHandler" singleton {
     any function verifyEmail(event, rc, prc)
     {
 
+        var user = userService.findByRecoverykey(recoverykey);
+
         // check if key is valid
-        if ( ! checkVerifyKey(rc.key)) {
+        if ( isNull(user)) {
             flash.put("error", "Deine Email konnte nicht verifiziert werden.");
             relocate("auth/register" );
         } else {
@@ -325,8 +327,6 @@ component extends="coldbox.system.EventHandler" singleton {
 
             // setup initial user chats
             setupInitialUser(user);
-
-            flash.put("info", "Deine Email wurde verifiziert. Du kannst dich jetzt einloggen.");
 
             relocate("auth/login");
 
@@ -361,20 +361,6 @@ component extends="coldbox.system.EventHandler" singleton {
         // check that recovery key date is not to old
         if (dateCompare(now(), user.getRecoverykeyend()) eq 1 ) {
             resetRecoveryKey(user);
-            return false;
-        }
-
-        return true;
-
-    }
-
-    private function checkVerifyKey (key)
-    {
-
-        // get user by recovery key
-        var user = userService.findByVerifykey( key );
-
-        if (isNull(user)) {
             return false;
         }
 
