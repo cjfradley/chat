@@ -118,7 +118,8 @@
             openModal() {
                 this.$modal.show(AddChannel, null, {
                     width: '60%',
-                    height: '60%'
+                    height: 'auto',
+                    scrollable: true
                 })
             }
         }
