@@ -16,7 +16,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "gulp": "^4.0.2",
         "lodash": "^4.17.15",
         "tailwindcss": "^1.4.6",
